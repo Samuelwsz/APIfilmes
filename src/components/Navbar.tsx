@@ -5,8 +5,8 @@ import { Link } from "react-router-dom"
 export default function NavBar() {
   return (
     <header className="bg-black flex justify-between p-8  items-center flex-col md:flex-row">
-      <Link to="/" className="text-2xl text-center mb-4 md:mb-0 text-yellow-400">
-        <VideoCameraIcon className="w-6 h-6" /> Movies Lib
+      <Link to="/" className="text-4xl text-center mb-4 md:mb-0 text-yellow-400">
+        <VideoCameraIcon className="w-8 h-8" /> Movies Lib
       </Link>
       <form>
         <div className="flex mb-2 md:mb-0">
