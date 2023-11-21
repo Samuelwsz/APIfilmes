@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom"
 import MovieCard from "../components/MovieCard"
 import { useEffect, useState } from "react"
-import { Movie } from "../interfaces/IMovie"
+import { IMovie } from "../interfaces/IMovie"
 import axios from "axios"
 
 const searchURL = import.meta.env.VITE_SEARCH
@@ -10,7 +10,7 @@ const apiKey = import.meta.env.VITE_API_KEY
 export default function Search() {
   const [searchParams] = useSearchParams()
 
-  const [movies, setMovies] = useState<Movie[]>([])
+  const [movies, setMovies] = useState<IMovie[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
   const [searched, setSearched] = useState<boolean>(false)

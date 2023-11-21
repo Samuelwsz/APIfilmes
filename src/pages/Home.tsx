@@ -1,13 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { Movie } from "../interfaces/IMovie"
+import { IMovie } from "../interfaces/IMovie"
 import MovieCard from "../components/MovieCard"
 
 const moviesURL = import.meta.env.VITE_API
 const apiKey = import.meta.env.VITE_API_KEY
 
 export default function Home() {
-  const [topMovies, setTopMovies] = useState<Movie[]>([])
+  const [topMovies, setTopMovies] = useState<IMovie[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
