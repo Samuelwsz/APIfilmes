@@ -10,16 +10,13 @@ const apiKey = import.meta.env.VITE_API_KEY
 export default function Movie() {
   const { id } = useParams()
   const [movie, setMovie] = useState<IMovie | null>(null)
-  const [loading, setLoading] = useState<boolean>(false)
 
   const getMovie = async (url: string) => {
-    setLoading(true)
     try {
       const res = await axios.get(url)
       setMovie(res.data)
     } catch (error) {
     } finally {
-      setLoading(false)
     }
   }
 

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom"
-import { Movie } from "../interfaces/IMovie"
+import { IMovie } from "../interfaces/IMovie"
 import { StarIcon } from "@heroicons/react/24/solid"
 
 interface MovieCardProps {
-  movie: Movie
+  movie: IMovie
   showLink?: boolean
 }
 
@@ -26,7 +26,7 @@ export default function MovieCard({ movie, showLink = true }: MovieCardProps) {
           </div>
           {showLink && (
             <Link
-              to={`movie/${movie.id}`}
+              to={`/movie/${movie.id}`}
               className="block mt-2 text-white font-semibold text-center bg-yellow-500 p-3 rounded-lg hover:bg-white hover:text-black hover:border-2 border-yellow-400"
             >
               Details
