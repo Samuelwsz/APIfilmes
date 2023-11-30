@@ -7,7 +7,9 @@ interface MovieCardProps {
   showLink?: boolean
 }
 
-const imageUrl = import.meta.env.VITE_IMG
+//const imageUrl = import.meta.env.VITE_IMG
+
+const imageUrl = "https://image.tmdb.org/t/p/w500/"
 
 export default function MovieCard({ movie, showLink = true }: MovieCardProps) {
   return (
