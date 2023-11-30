@@ -1,34 +1,29 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { IMovie } from "../interfaces/IMovie"
 import MovieCard from "../components/MovieCard"
-
-const moviesURL = import.meta.env.VITE_API
-const apiKey = import.meta.env.VITE_API_KEY
+import { getTopRatedMovies } from "../axios/api"
 
 export default function Home() {
   const [topMovies, setTopMovies] = useState<IMovie[]>([])
   const [loading, setLoading] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
 
-  const getTopRatedMovies = async (url: string) => {
-    setLoading(true)
-    try {
-      const res = await axios.get(url)
-      setTopMovies(res.data.results)
-      setError(null)
-    } catch (error) {
-      setError("Error")
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    const topRatedUrl = `${moviesURL}top_rated?${apiKey}`
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const res = await getTopRatedMovies()
+        setTopMovies(res.data.results)
+        setError(null)
+      } catch (error) {
+        setError("Error")
+      } finally {
+        setLoading(false)
+      }
+    }
 
-    getTopRatedMovies(topRatedUrl)
-  }, [])
+    fetchData()
+  }, [getTopRatedMovies])
 
   return (
     <div className="">

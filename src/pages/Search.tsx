@@ -2,14 +2,10 @@ import { useSearchParams } from "react-router-dom"
 import MovieCard from "../components/MovieCard"
 import { useEffect, useState } from "react"
 import { IMovie } from "../interfaces/IMovie"
-import axios from "axios"
-
-const searchURL = import.meta.env.VITE_SEARCH
-const apiKey = import.meta.env.VITE_API_KEY
+import { getSearchedMovies } from "../axios/api"
 
 export default function Search() {
   const [searchParams] = useSearchParams()
-
   const [movies, setMovies] = useState<IMovie[]>([])
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
@@ -17,30 +13,27 @@ export default function Search() {
 
   const query = searchParams.get("q")
 
-  const getSearchedMovies = async (url: string) => {
-    setLoading(true)
-    try {
-      const res = await axios.get(url)
-      setMovies(res.data.results)
-      setError(null) // Limpa o estado de erro se a busca for bem-sucedida
-      setSearched(true)
-    } catch (error) {
-      setError("Não foi possível encontrar filmes. Tente novamente.") // Define a mensagem de erro no estado
-    } finally {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
     setSearched(true) // Define como true para a primeira renderização
     window.history.replaceState(null, "", window.location.pathname)
   }, [])
 
   useEffect(() => {
-    if (searched && query) {
-      const searchWithQueryURL = `${searchURL}?${apiKey}&query=${query}`
-      getSearchedMovies(searchWithQueryURL)
+    const fetchData = async () => {
+      if (searched && query) {
+        setLoading(true)
+        try {
+          const res = await getSearchedMovies(query)
+          setMovies(res.data.results)
+        } catch (error) {
+          setError("Error")
+        } finally {
+          setLoading(false)
+        }
+      }
     }
+
+    fetchData()
   }, [query, searched])
 
   return (
@@ -54,7 +47,9 @@ export default function Search() {
         </p>
       )}
       {error && (
-        <p className="text-3xl font-semibold text-black text-center">{error}</p>
+        <p className="text-3xl font-semibold text-red-400 text-center">
+          {error}
+        </p>
       )}
 
       <div className=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mx-5 mb-5">

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { IMovie } from "../interfaces/IMovie"
-import axios from "axios"
 import MovieCard from "../components/MovieCard"
 import {
   BanknotesIcon,
@@ -9,27 +8,43 @@ import {
   CurrencyDollarIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/solid"
-
+import { getMovieById } from "../axios/api"
+/*
 const moviesURL = import.meta.env.VITE_API
 const apiKey = import.meta.env.VITE_API_KEY
-
+*/
 export default function Movie() {
   const { id } = useParams()
   const [movie, setMovie] = useState<IMovie | null>(null)
-
+  const [loading, setLoading] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+  /*
   const getMovie = async (url: string) => {
+    setLoading(true)
     try {
       const res = await axios.get(url)
       setMovie(res.data)
     } catch (error) {
+      setError("Error")
     } finally {
+      setLoading(false)
     }
-  }
+  }*/
 
   useEffect(() => {
-    const movieURL = `${moviesURL}${id}?${apiKey}`
+    const fetchData = async () => {
+      setLoading(true)
+      try {
+        const res = await getMovieById(id)
+        setMovie(res.data)
+      } catch (error) {
+        setError("Error")
+      } finally {
+        setLoading(false)
+      }
+    }
 
-    getMovie(movieURL)
+    fetchData()
   }, [])
 
   const formatCurrency = (number: number) => {
@@ -41,6 +56,14 @@ export default function Movie() {
 
   return (
     <div>
+      {loading && (
+        <p className=" text-3xl font-semibold text-black text-center">
+          Loading...
+        </p>
+      )}
+      {error && (
+        <p className="text-red-500 font-semibold text-xl mt-2">{error}</p>
+      )}
       {movie && (
         <>
           <MovieCard movie={movie} showLink={false} />

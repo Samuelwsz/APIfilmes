@@ -7,6 +7,7 @@
 #### Axios
 #### TypeScript
 #### Heroicons
-#### React
 
 ### [Link projeto]()
+
+### https://www.youtube.com/watch?v=XqxUHVVO7-U&ab_channel=MatheusBattisti-HoradeCodar
