@@ -10,7 +10,7 @@
 
 #### TypeScript
 
-#### Heroicons
+#### TailwindCSS
 
 ### [Link projeto](https://api-filmes-five.vercel.app/)
 
